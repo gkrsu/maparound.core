@@ -955,9 +955,8 @@ namespace MapAround.IO
                 }
 
                 this.RecountColumnLengths(this._dbaseHeader, featureCollection);
+                this.RecountRecords(this._dbaseHeader,featureCollection);
                 
-                //int j = 0;
-           //     foreach (Feature feature in featureCollection)
 
                 DbaseWriter  dbaseWriter = new DbaseWriter(dbaseFile, this._dbaseHeader);
                 //dbaseWriter.WriteHeader();//this._dbaseHeader);
@@ -1096,121 +1095,7 @@ namespace MapAround.IO
 
         #region Private methods
 
-        ///// <summary>
-        ///// Reads a four-byte integer endianness little endian.
-        ///// </summary>
-        ///// <param name="stream">input stream</param>
-        ///// <returns>Read an integer</returns>
-        //private static int ReadInt32_LE(Stream stream)
-        //{
-        //    byte[] intBytes = new byte[4];
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        int b = stream.ReadByte();
-        //        if (b == -1)
-        //            throw new EndOfStreamException();
-        //        intBytes[i] = (byte)b;
-        //    }
-
-        //    return BitConverter.ToInt32(intBytes, 0);
-        //}
-
-        ///// <summary>
-        ///// Reads a four-byte integer endianness big endian.
-        ///// </summary>
-        ///// <param name="stream">input stream</param>
-        ///// <returns>Read an integer</returns>
-        //private static int ReadInt32_BE(Stream stream)
-        //{
-        //    byte[] intBytes = new byte[4];
-        //    for (int i = 3; i >= 0; i--)
-        //    {
-        //        int b = stream.ReadByte();
-        //        if (b == -1)
-        //            throw new EndOfStreamException();
-        //        intBytes[i] = (byte)b;
-        //    }
-
-        //    return BitConverter.ToInt32(intBytes, 0);
-        //}
-
-        ///// <summary>
-        ///// Reads a four-byte integer endianness little endian endian.
-        ///// </summary>
-        ///// <param name="stream">input stream</param>
-        ///// <returns>been read value</returns>
-        //private static double ReadDouble64_LE(Stream stream)
-        //{
-        //    byte[] doubleBytes = new byte[8];
-        //    for (int i = 0; i < 8; i++)
-        //    {
-        //        int b = stream.ReadByte();
-        //        if (b == -1)
-        //            throw new EndOfStreamException();
-        //        doubleBytes[i] = (byte)b;
-        //    }
-
-        //    return BitConverter.ToDouble(doubleBytes, 0);
-        //}
-
-        ///// <summary>
-        ///// Reads a record represents a point.
-        ///// </summary>
-        ///// <param name="stream">input stream</param>
-        ///// <param name="record">Запись Shape-файла в которую будет помещена прочитанная информация</param>
-        ///// <param name="bounds">Ограничивающий прямоугольник, с которым должен пересекаться ограничивающий прямоугольник записи</param>
-        //private static bool ReadPoint(Stream stream, BoundingRectangle bounds, ShapeFileRecord record)
-        //{
-        //    ICoordinate p = PlanimetryEnvironment.NewCoordinate(0, 0);
-        //    p.X = stream.ReadDouble();//  ShapeFile.ReadDouble64_LE(stream);
-        //    p.Y = stream.ReadDouble();// ShapeFile.ReadDouble64_LE(stream);
-
-        //    if (bounds != null && !bounds.IsEmpty() && !bounds.ContainsPoint(p))
-        //        return false;
-
-        //    record.Points.Add(p);
-
-        //    record.MinX = p.X;
-        //    record.MinY = p.Y;
-        //    record.MaxX = record.MinX;
-        //    record.MaxY = record.MinY;
-
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// Читает запись представляющую коллекцию точек.
-        ///// </summary>
-        ///// <param name="stream">input stream</param>
-        ///// <param name="record">Запись Shape-файла в которую будет помещена прочитанная информация</param>
-        ///// <param name="bounds">Ограничивающий прямоугольник, с которым должен пересекаться ограничивающий прямоугольник записи</param>
-        //private static bool ReadMultipoint(Stream stream, BoundingRectangle bounds, ShapeFileRecord record)
-        //{
-        //    record.MinX = stream.ReadDouble();// ShapeFile.ReadDouble64_LE(stream);
-        //    record.MinY = stream.ReadDouble();// ShapeFile.ReadDouble64_LE(stream);
-        //    record.MaxX = stream.ReadDouble();// ShapeFile.ReadDouble64_LE(stream);
-        //    record.MaxY = stream.ReadDouble();// ShapeFile.ReadDouble64_LE(stream);
-
-        //    int numPoints = stream.ReadInt32();// ShapeFile.ReadInt32_LE(stream);
-
-        //    if (!isRecordInView(bounds, record))
-        //    {
-        //        stream.Seek((long)numPoints * 16, SeekOrigin.Current);
-        //        return false;
-        //    }
-
-        //    for (int i = 0; i < numPoints; i++)
-        //    {
-        //        ICoordinate p =
-        //            PlanimetryEnvironment.NewCoordinate(
-        //            stream.ReadDouble(),// ShapeFile.ReadDouble64_LE(stream),
-        //            stream.ReadDouble());//ShapeFile.ReadDouble64_LE(stream));
-
-        //        record.Points.Add(p);
-        //    }
-
-        //    return true;
-        //}
+      
 
         private static bool isRecordInView(BoundingRectangle bounds, ShapeFileRecord record)
         {
@@ -1224,44 +1109,7 @@ namespace MapAround.IO
             return true;
         }
 
-        ///// <summary>
-        ///// Reads a record representing the polygon.
-        ///// </summary>
-        ///// <param name="stream">input stream</param>
-        ///// <param name="record"> Record Shape-file in the location for reading the information </ param>
-        ///// <param name="bounds">Bounding box, which must intersect the bounding box entries</param>
-        //private static bool ReadPolygon(Stream stream, BoundingRectangle bounds, ShapeFileRecord record)
-        //{
-        //    record.MinX = stream.ReadDouble();// ShapeFile.ReadDouble64_LE(stream);
-        //    record.MinY = stream.ReadDouble();// ShapeFile.ReadDouble64_LE(stream);
-        //    record.MaxX = stream.ReadDouble();// ShapeFile.ReadDouble64_LE(stream);
-        //    record.MaxY = stream.ReadDouble();// ShapeFile.ReadDouble64_LE(stream);
-
-        //    int numParts = stream.ReadInt32();// ShapeFile.ReadInt32_LE(stream);
-        //    int numPoints = stream.ReadInt32();// ShapeFile.ReadInt32_LE(stream);
-
-        //    if (!isRecordInView(bounds, record))
-        //    {
-        //        stream.Seek((long)numPoints * 16 + numParts * 4, SeekOrigin.Current);
-        //        return false;
-        //    }
-
-        //    for (int i = 0; i < numParts; i++)
-        //        record.Parts.Add(stream.ReadInt32());// ShapeFile.ReadInt32_LE(stream));
-
-        //    for (int i = 0; i < numPoints; i++)
-        //    {
-        //        ICoordinate p =
-        //            PlanimetryEnvironment.NewCoordinate(
-        //                stream.ReadDouble(),//ShapeFile.ReadDouble64_LE(stream),
-        //                stream.ReadDouble());//ShapeFile.ReadDouble64_LE(stream));
-
-        //        record.Points.Add(p);
-        //    }
-
-        //    return true;
-        //}
-
+       
         /// <summary>
         /// Merges attribute rows with the shape file records.
         /// </summary>
@@ -1291,6 +1139,16 @@ namespace MapAround.IO
                 var fieldValues = Features.OfType<Feature>().Select(f => f[field.Name]);
                 DbaseHeader.RecountColumnLength(field, fieldValues);
             }
+        }
+
+        /// <summary>
+        /// Computes the count of DBF records
+        ///  </summary>
+        /// <param name="DbaseHeader">The header of the dBase attribute file</param>
+        /// <param name="Features">Enumerator of features</param>
+        private void RecountRecords(DbaseFileHeader DbaseHeader, IEnumerable Features)
+        {
+            DbaseHeader.NumRecords = Features.Cast<Feature>().Count();
         }
 
         #endregion Private methods
