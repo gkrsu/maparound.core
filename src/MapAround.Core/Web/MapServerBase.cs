@@ -262,7 +262,7 @@ namespace MapAround.Web
                 bool cacheable = true;
                 string allLayerKey = "";
 
-                foreach (var layer in useLayers)
+                foreach (var layer in useLayers.OrderBy(x=>x.Alias))
                 {
                     cacheable &= layer.Cacheable;
                     allLayerKey += layer.Alias;
